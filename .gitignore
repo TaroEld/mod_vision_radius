@@ -1,0 +1,7 @@
+.vscode/
+assets/
+*.sublime-project
+*.sublime-workspace
+/unpacked
+/unpacked_brushes
+*.zip
