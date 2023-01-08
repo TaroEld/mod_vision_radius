@@ -3,5 +3,4 @@ assets/
 *.sublime-project
 *.sublime-workspace
 /unpacked
-/unpacked_brushes
 *.zip
