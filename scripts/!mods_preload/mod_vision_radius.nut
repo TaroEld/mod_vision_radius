@@ -1,7 +1,7 @@
 ::VisionRadius <- {
 	ID = "mod_vision_radius",
 	Name = "Vision Radius",
-	Version = "2.0.0",
+	Version = "2.0.1",
 	Const = {
 		TaperingBrush = "vision_radius_tapering",
 		LineBrush = "vision_radius_line",
@@ -39,7 +39,7 @@
 };
 
 ::mods_registerMod(::VisionRadius.ID, ::VisionRadius.Version, ::VisionRadius.Name);
-::mods_queue(null, "mod_msu", function()
+::mods_queue(null, "mod_msu(>=1.1.1)", function()
 {
 	::VisionRadius.Mod <- ::MSU.Class.Mod(::VisionRadius.ID, ::VisionRadius.Version, ::VisionRadius.Name);
 	local generalPage = ::VisionRadius.Mod.ModSettings.addPage("General");
