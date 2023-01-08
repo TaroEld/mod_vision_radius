@@ -1,0 +1,8 @@
+.vscode/
+assets/
+*.sublime-project
+*.sublime-workspace
+/unpacked
+*.zip
+/brushes
+/gfx
