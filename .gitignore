@@ -4,3 +4,4 @@ assets/
 *.sublime-workspace
 /unpacked
 *.zip
+/brushes
