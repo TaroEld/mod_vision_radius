@@ -9,6 +9,7 @@
 		InnerSprite = "vision_radius_inner",
 	},
 	Config = {
+		Enabled = true,
 		InnerCircle = false,
 		LineCircle = false,
 		LineColor = ::createColor("#ffffff")
@@ -30,11 +31,12 @@
 		local outerSprite = ::World.getPlayerEntity().getSprite(this.Const.OuterSprite);
 		outerSprite.setBrush(this.getBrush());
 		outerSprite.Color = this.Config.LineColor;
+		outerSprite.Visible = this.Config.Enabled;
 
 		local innerSprite = ::World.getPlayerEntity().getSprite(this.Const.InnerSprite);
 		innerSprite.setBrush(this.getBrush());
-		innerSprite.Visible = this.Config.InnerCircle;
 		innerSprite.Color = this.Config.LineColor;
+		innerSprite.Visible = this.Config.Enabled && this.Config.InnerCircle;
 	},
 };
 
@@ -43,6 +45,13 @@
 {
 	::VisionRadius.Mod <- ::MSU.Class.Mod(::VisionRadius.ID, ::VisionRadius.Version, ::VisionRadius.Name);
 	local generalPage = ::VisionRadius.Mod.ModSettings.addPage("General");
+	generalPage.addBooleanSetting("vision_radius_enabled", true, "Enabled", 
+		"Enable/Disable circles."
+		).addAfterChangeCallback(function(_){
+			::VisionRadius.Config.Enabled = this.getValue();
+			::VisionRadius.updateSpritesOnCampaign();
+	})
+
 	generalPage.addBooleanSetting("vision_radius_line_circle", false, "Line circles", 
 		"Display the circle(s) as lines instead fo the fog of war circle."
 		).addAfterChangeCallback(function(_){
@@ -77,6 +86,8 @@
 		local onUpdate = o.onUpdate
 		o.onUpdate = function(){
 			onUpdate();
+			if (!::VisionRadius.Config.Enabled)
+				return;
 			local spriteScaleMultiplier = ::VisionRadius.getSpriteScaleMultiplier();
 			this.getSprite(::VisionRadius.Const.OuterSprite).Scale = (this.getVisionRadius() / 200.0) * spriteScaleMultiplier;
 			this.getSprite(::VisionRadius.Const.InnerSprite).Scale = (this.getVisionRadius() / 200.0) * 0.8 * spriteScaleMultiplier;
