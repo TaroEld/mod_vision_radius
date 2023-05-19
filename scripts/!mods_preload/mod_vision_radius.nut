@@ -1,7 +1,7 @@
 ::VisionRadius <- {
 	ID = "mod_vision_radius",
 	Name = "Vision Radius",
-	Version = "2.1.0",
+	Version = "2.1.1",
 	Const = {
 		TaperingBrush = "vision_radius_tapering",
 		LineBrush = "vision_radius_line",
