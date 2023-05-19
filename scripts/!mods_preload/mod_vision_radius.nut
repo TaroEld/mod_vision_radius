@@ -74,8 +74,7 @@
 	})
 
 	generalPage.addRangeSetting("vision_radius_inner_circle_scale", ::VisionRadius.Config.InnerCircleScale, 0.1, 2.0, 0.01, "Inner Circle Scale", 
-		"Scale of the inner circle. This helps you find locations that have a lower visibility value, such as the Hunting Grounds. The value you want depends on the target. 
-		For example, Witch Hut has a 0.9 multiplier, and is in a forest which has a 0.5 multiplier, so the final value is 0.9*0.5 = 0.45."
+		"Scale of the inner circle. This helps you find locations that have a lower visibility value, such as the Hunting Grounds. The value you want depends on the target. For example, Witch Hut has a 0.9 multiplier, and is in a forest which has a 0.5 multiplier, so the final value is 0.9*0.5 = 0.45."
 		).addAfterChangeCallback(function(_){
 			::VisionRadius.Config.InnerCircleScale = this.getValue();
 			::VisionRadius.updateSpritesOnCampaign();
