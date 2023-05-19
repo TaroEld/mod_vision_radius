@@ -11,6 +11,7 @@
 	Config = {
 		Enabled = true,
 		InnerCircle = false,
+		InnerCircleScale = 0.8
 		LineCircle = false,
 		LineColor = ::createColor("#ffffff")
 	},
@@ -66,11 +67,20 @@
 	});
 
 	generalPage.addBooleanSetting("vision_radius_display_inner_circle", false, "Add Inner Circle", 
-		"Adds an inner circle at 0.8x the size of the outer circle. This helps you find locations that have a lowwr visibility value, such as the Hunting Grounds."
+		"Adds an inner circle at 0.8x the size of the outer circle. This helps you find locations that have a lower visibility value, such as the Hunting Grounds."
 		).addAfterChangeCallback(function(_){
 			::VisionRadius.Config.InnerCircle = this.getValue();
 			::VisionRadius.updateSpritesOnCampaign();
 	})
+
+	generalPage.addRangeSetting("vision_radius_inner_circle_scale", ::VisionRadius.Config.InnerCircleScale, 0.1, 2.0, 0.01, "Inner Circle Scale", 
+		"Scale of the inner circle. This helps you find locations that have a lower visibility value, such as the Hunting Grounds. The value you want depends on the target. 
+		For example, Witch Hut has a 0.9 multiplier, and is in a forest which has a 0.5 multiplier, so the final value is 0.9*0.5 = 0.45."
+		).addAfterChangeCallback(function(_){
+			::VisionRadius.Config.InnerCircleScale = this.getValue();
+			::VisionRadius.updateSpritesOnCampaign();
+	})
+
 
 	::mods_hookExactClass("entity/world/player_party", function(o){
 		local onInit = o.onInit;
@@ -90,7 +100,7 @@
 				return;
 			local spriteScaleMultiplier = ::VisionRadius.getSpriteScaleMultiplier();
 			this.getSprite(::VisionRadius.Const.OuterSprite).Scale = (this.getVisionRadius() / 200.0) * spriteScaleMultiplier;
-			this.getSprite(::VisionRadius.Const.InnerSprite).Scale = (this.getVisionRadius() / 200.0) * 0.8 * spriteScaleMultiplier;
+			this.getSprite(::VisionRadius.Const.InnerSprite).Scale = (this.getVisionRadius() / 200.0) * ::VisionRadius.Config.InnerCircleScale * spriteScaleMultiplier;
 		}
 	})
 })
