@@ -1,4 +1,4 @@
-<brush name="gfx/vision_radius_circle.png" version="17">
+<brush name="gfx/mod_vision_radius.png" version="17">
 	<sprite id="vision_radius_tapering" ic="FFFFFFFF" width="1010" height="1010" img="pngs\vision_radius_tapering.png" />
 	<sprite id="vision_radius_line" ic="FFFFFFFF" width="1010" height="1010" img="pngs\vision_radius_line.png" />
 </brush>

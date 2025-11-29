@@ -1,7 +1,7 @@
 ::VisionRadius <- {
 	ID = "mod_vision_radius",
 	Name = "Vision Radius",
-	Version = "2.1.1",
+	Version = "2.2.0",
 	Const = {
 		TaperingBrush = "vision_radius_tapering",
 		LineBrush = "vision_radius_line",
@@ -13,7 +13,8 @@
 		InnerCircle = false,
 		InnerCircleScale = 0.8
 		LineCircle = false,
-		LineColor = ::createColor("#ffffff")
+		ColorOuter = ::createColor("#ffffff"),
+		ColorInner = ::createColor("#ffffff"),
 	},
 	function getBrush()
 	{
@@ -31,12 +32,12 @@
 
 		local outerSprite = ::World.getPlayerEntity().getSprite(this.Const.OuterSprite);
 		outerSprite.setBrush(this.getBrush());
-		outerSprite.Color = this.Config.LineColor;
+		outerSprite.Color = this.Config.ColorOuter;
 		outerSprite.Visible = this.Config.Enabled;
 
 		local innerSprite = ::World.getPlayerEntity().getSprite(this.Const.InnerSprite);
 		innerSprite.setBrush(this.getBrush());
-		innerSprite.Color = this.Config.LineColor;
+		innerSprite.Color = this.Config.ColorInner;
 		innerSprite.Visible = this.Config.Enabled && this.Config.InnerCircle;
 	},
 };
@@ -54,15 +55,21 @@
 	})
 
 	generalPage.addBooleanSetting("vision_radius_line_circle", false, "Line circles", 
-		"Display the circle(s) as lines instead fo the fog of war circle."
+		"Display the circle(s) as lines instead of the fog of war circle."
 		).addAfterChangeCallback(function(_){
 			::VisionRadius.Config.LineCircle = this.getValue();
 			::VisionRadius.updateSpritesOnCampaign();
 	})
 
-	generalPage.addColorPickerSetting("vision_radius_line_color", "255,255,255,1.0", "Color of 'line' circles").addAfterChangeCallback(function(_)
+	generalPage.addColorPickerSetting("vision_radius_line_color_outer", "255,255,255,1.0", "Color of outer circles", "For the fog of war circle, only alpha (the last value) will have an effect.").addAfterChangeCallback(function(_)
 	{
-		::VisionRadius.Config.LineColor = ::createColor(this.getValueAsHexString());
+		::VisionRadius.Config.ColorOuter = ::createColor(this.getValueAsHexString());
+		::VisionRadius.updateSpritesOnCampaign();
+	});
+
+		generalPage.addColorPickerSetting("vision_radius_line_color_inner", "255,255,255,1.0", "Color of inner circles", "For the fog of war circle, only alpha (the last value) will have an effect.").addAfterChangeCallback(function(_)
+	{
+		::VisionRadius.Config.ColorInner = ::createColor(this.getValueAsHexString());
 		::VisionRadius.updateSpritesOnCampaign();
 	});
 
